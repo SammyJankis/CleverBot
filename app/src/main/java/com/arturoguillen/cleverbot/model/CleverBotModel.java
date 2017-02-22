@@ -9,9 +9,9 @@ import com.arturoguillen.cleverbot.entity.BotResponse;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -51,10 +51,29 @@ public class CleverBotModel extends BaseModel {
         void onError(Throwable e);
     }
 
-    public void getReply(String input, final ResponseObserver observer) {
+    public Disposable getReply(String input, final ResponseObserver observer) {
 
         String cs = sharedPreferences.getString(Constants.CLEVERBOT_STATE, null);
-        Observable<BotResponse> observable = retrofit.create(CleverBotApi.class).getReply(cs, input, "");
+        final Observable<BotResponse> observable = retrofit.create(CleverBotApi.class).getReply(cs, input, "");
 
+        return observable.
+                subscribeOn(subscribeScheduler).
+                observeOn(AndroidSchedulers.mainThread()).
+                subscribeWith(new DisposableObserver<BotResponse>() {
+                    @Override
+                    public void onNext(BotResponse botResponse) {
+                        observer.onCompleted(botResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        observer.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

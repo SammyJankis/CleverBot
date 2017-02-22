@@ -13,5 +13,7 @@ public interface ChatView {
 
     void hideProgressIndicator();
 
+    void showResponse(String response);
+
     Context getContext();
 }

@@ -7,6 +7,8 @@ import com.arturoguillen.cleverbot.model.CleverBotModel;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by PC on 21/02/2017.
  */
@@ -15,6 +17,7 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
 
     private ChatView view;
 
+    private Disposable getReplyDisposable;
     @Inject
     CleverBotModel cleverBotModel;
 
@@ -25,15 +28,17 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
     }
 
     public void sendMessageToBot(String input) {
-        cleverBotModel.getReply(input, new CleverBotModel.ResponseObserver() {
+        view.showProgressIndicator();
+        getReplyDisposable = cleverBotModel.getReply(input, new CleverBotModel.ResponseObserver() {
             @Override
             public void onCompleted(BotResponse botResponse) {
-
+                view.showResponse(botResponse.getInteraction1Other());
+                view.hideProgressIndicator();
             }
 
             @Override
             public void onError(Throwable e) {
-
+                view.hideProgressIndicator();
             }
         });
     }
@@ -46,6 +51,7 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
     @Override
     public void detachView() {
         this.view = null;
+        getReplyDisposable.dispose();
     }
 
     @Override
