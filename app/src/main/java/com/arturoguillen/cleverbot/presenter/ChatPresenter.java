@@ -2,6 +2,7 @@ package com.arturoguillen.cleverbot.presenter;
 
 import android.os.Bundle;
 
+import com.arturoguillen.cleverbot.entity.BotResponse;
 import com.arturoguillen.cleverbot.model.CleverBotModel;
 
 import javax.inject.Inject;
@@ -21,6 +22,20 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
     @Inject
     public ChatPresenter() {
 
+    }
+
+    public void sendMessageToBot(String input) {
+        cleverBotModel.getReply(input, new CleverBotModel.ResponseObserver() {
+            @Override
+            public void onCompleted(BotResponse botResponse) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     @Override

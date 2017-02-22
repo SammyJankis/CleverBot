@@ -1,34 +1,60 @@
 package com.arturoguillen.cleverbot.model;
 
-import com.arturoguillen.cleverbot.entity.BotResponse;
+import android.content.SharedPreferences;
 
-import java.util.Observable;
+import com.arturoguillen.cleverbot.Constants;
+import com.arturoguillen.cleverbot.PrivateConstants;
+import com.arturoguillen.cleverbot.entity.BotResponse;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
+
 
 /**
  * Created by PC on 21/02/2017.
  */
 
-public class CleverBotModel {
+public class CleverBotModel extends BaseModel {
 
     @Inject
     Retrofit retrofit;
 
-    public @Inject CleverBotModel() {
+    @Inject
+    SharedPreferences sharedPreferences;
+
+    public
+    @Inject
+    CleverBotModel() {
 
     }
 
-    private interface CleverBotApi{
-        @GET("")
-        Observable<BotResponse> getReply();
+    private interface CleverBotApi {
+        @GET("getreply?key=" + PrivateConstants.API_KEY)
+        Observable<BotResponse> getReply(
+                @Query("cs") String cleverbotState,
+                @Query("input") String input,
+                @Query("callback") String callback);
 
     }
 
-    public void getResponse(){
-        retrofit.create(CleverBotApi.class).getReply();
+    public interface ResponseObserver {
+
+        void onCompleted(BotResponse botResponse);
+
+        void onError(Throwable e);
+    }
+
+    public void getReply(String input, final ResponseObserver observer) {
+
+        String cs = sharedPreferences.getString(Constants.CLEVERBOT_STATE, null);
+        Observable<BotResponse> observable = retrofit.create(CleverBotApi.class).getReply(cs, input, "");
+
     }
 }

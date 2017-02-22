@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.arturoguillen.cleverbot.di.component.DaggerNetComponent;
 import com.arturoguillen.cleverbot.di.component.NetComponent;
+import com.arturoguillen.cleverbot.di.module.DataModule;
 import com.arturoguillen.cleverbot.di.module.NetModule;
 
 
@@ -19,6 +20,7 @@ public class App extends Application {
         super.onCreate();
         component = DaggerNetComponent.builder()
                 .netModule(new NetModule())
+                .dataModule(new DataModule(this))
                 .build();
     }
 

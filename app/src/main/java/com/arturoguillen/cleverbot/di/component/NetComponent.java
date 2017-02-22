@@ -1,5 +1,6 @@
 package com.arturoguillen.cleverbot.di.component;
 
+import com.arturoguillen.cleverbot.di.module.DataModule;
 import com.arturoguillen.cleverbot.di.module.NetModule;
 import com.arturoguillen.cleverbot.view.ChatActivity;
 
@@ -12,7 +13,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {NetModule.class})
+@Component(modules = {NetModule.class, DataModule.class})
 public interface NetComponent {
     void inject(ChatActivity chatActivity);
 }
