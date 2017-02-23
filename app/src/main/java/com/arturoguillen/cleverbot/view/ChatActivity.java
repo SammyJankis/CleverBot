@@ -17,6 +17,7 @@ import com.arturoguillen.cleverbot.presenter.ChatPresenter;
 import com.arturoguillen.cleverbot.presenter.ChatView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -61,9 +62,10 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void sendInput() {
         String text = String.valueOf(chatInput.getText());
         ChatAdapter adapter = (ChatAdapter) chatRecycler.getAdapter();
-        adapter.addMessage(new Message(text, true));
+        adapter.addMessage(new Message(text, true, new Date()));
         presenter.sendMessageToBot(text);
         chatRecycler.smoothScrollToPosition(chatRecycler.getAdapter().getItemCount());
+        chatInput.setText("");
     }
 
     @Override
@@ -93,10 +95,10 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    public void showResponse(String response) {
+    public void showResponse(Message message) {
         chatInput.setText("");
         ChatAdapter adapter = (ChatAdapter) chatRecycler.getAdapter();
-        adapter.addMessage(new Message(response, false));
+        adapter.addMessage(message);
     }
 
     @Override

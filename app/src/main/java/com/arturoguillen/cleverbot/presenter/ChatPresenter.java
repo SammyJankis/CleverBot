@@ -2,7 +2,7 @@ package com.arturoguillen.cleverbot.presenter;
 
 import android.os.Bundle;
 
-import com.arturoguillen.cleverbot.entity.BotResponse;
+import com.arturoguillen.cleverbot.entity.Message;
 import com.arturoguillen.cleverbot.model.CleverBotModel;
 
 import javax.inject.Inject;
@@ -31,8 +31,8 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
         view.showProgressIndicator();
         getReplyDisposable = cleverBotModel.getReply(input, new CleverBotModel.ResponseObserver() {
             @Override
-            public void onCompleted(BotResponse botResponse) {
-                view.showResponse(botResponse.getOutput());
+            public void onCompleted(Message message) {
+                view.showResponse(message);
                 view.hideProgressIndicator();
             }
 
