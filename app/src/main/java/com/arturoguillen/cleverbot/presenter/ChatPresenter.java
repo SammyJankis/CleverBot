@@ -32,7 +32,7 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
         getReplyDisposable = cleverBotModel.getReply(input, new CleverBotModel.ResponseObserver() {
             @Override
             public void onCompleted(BotResponse botResponse) {
-                view.showResponse(botResponse.getInteraction1Other());
+                view.showResponse(botResponse.getOutput());
                 view.hideProgressIndicator();
             }
 

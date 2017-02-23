@@ -37,6 +37,7 @@
         android:id="@+id/chat_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
         android:layout_above="@id/chat_progress"
         android:layout_alignParentTop="true" />
 
