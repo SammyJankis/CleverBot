@@ -52,7 +52,8 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
     @Override
     public void detachView() {
         this.view = null;
-        getReplyDisposable.dispose();
+        if (getReplyDisposable != null)
+            getReplyDisposable.dispose();
     }
 
     @Override

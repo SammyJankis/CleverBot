@@ -58,4 +58,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public ArrayList<Message> getChatContent() {
+        return chatContent;
+    }
+
+    public void setChatContent(ArrayList<Message> savedChatContent) {
+        chatContent.clear();
+        chatContent.addAll(savedChatContent);
+        notifyDataSetChanged();
+    }
 }

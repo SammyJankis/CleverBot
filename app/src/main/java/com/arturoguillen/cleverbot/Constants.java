@@ -10,4 +10,7 @@ public class Constants {
     //Shared Preferences
     public static final String CLEVERBOT_STATE = "CLEVERBOT_STATE";
 
+    public static final String RECYCLERVIEW_STATE = "RECYCLERVIEW_STATE";
+    public static final String RECYCLEVIEW_CONTENT = "RECYCLEVIEW_CONTENT";
+
 }

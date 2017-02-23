@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.arturoguillen.cleverbot.Constants;
 import com.arturoguillen.cleverbot.R;
 import com.arturoguillen.cleverbot.di.component.NetComponent;
 import com.arturoguillen.cleverbot.entity.Message;
 import com.arturoguillen.cleverbot.presenter.ChatPresenter;
 import com.arturoguillen.cleverbot.presenter.ChatView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -60,6 +63,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
         ChatAdapter adapter = (ChatAdapter) chatRecycler.getAdapter();
         adapter.addMessage(new Message(text, true));
         presenter.sendMessageToBot(text);
+        chatRecycler.smoothScrollToPosition(chatRecycler.getAdapter().getItemCount());
     }
 
     @Override
@@ -90,6 +94,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
     @Override
     public void showResponse(String response) {
+        chatInput.setText("");
         ChatAdapter adapter = (ChatAdapter) chatRecycler.getAdapter();
         adapter.addMessage(new Message(response, false));
     }
@@ -98,6 +103,9 @@ public class ChatActivity extends BaseActivity implements ChatView {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
+            ChatAdapter adapter = (ChatAdapter) chatRecycler.getAdapter();
+            adapter.setChatContent((ArrayList<Message>) savedInstanceState.getSerializable(Constants.RECYCLEVIEW_CONTENT));
+            chatRecycler.getLayoutManager().onRestoreInstanceState(savedInstanceState.getParcelable(Constants.RECYCLERVIEW_STATE));
             presenter.onRestoreInstanceState(savedInstanceState);
         }
     }
@@ -105,6 +113,9 @@ public class ChatActivity extends BaseActivity implements ChatView {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        ChatAdapter adapter = (ChatAdapter) chatRecycler.getAdapter();
+        outState.putParcelable(Constants.RECYCLERVIEW_STATE, chatRecycler.getLayoutManager().onSaveInstanceState());
+        outState.putSerializable(Constants.RECYCLEVIEW_CONTENT, adapter.getChatContent());
         presenter.onSaveInstanceState(outState);
     }
 
