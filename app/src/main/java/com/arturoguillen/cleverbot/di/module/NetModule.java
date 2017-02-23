@@ -3,14 +3,15 @@ package com.arturoguillen.cleverbot.di.module;
 import com.arturoguillen.cleverbot.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -39,9 +40,18 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient() {
-        OkHttpClient client = new OkHttpClient();
-        return client;
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return logging;
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor) {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        clientBuilder.addInterceptor(httpLoggingInterceptor);
+        return clientBuilder.build();
     }
 
     @Provides
@@ -49,7 +59,7 @@ public class NetModule {
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(baseurl)
                 .client(okHttpClient)
                 .build();

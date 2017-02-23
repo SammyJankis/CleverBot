@@ -1,32 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/chat_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/chat_progress"
-        android:layout_width="@dimen/progress_size"
-        android:layout_height="@dimen/progress_size"
-        android:layout_margin="@dimen/margin_lateral_low"
-        android:background="@android:color/transparent"
-        android:visibility="gone" />
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/chat_input_text"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="@dimen/progress_size"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <EditText
@@ -39,7 +20,24 @@
             android:id="@+id/chat_send_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="Send" />
     </LinearLayout>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/chat_progress"
+        android:layout_width="@dimen/progress_size"
+        android:layout_height="@dimen/progress_size"
+        android:layout_above="@id/chat_input_text"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_lateral_low"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/chat_progress"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>

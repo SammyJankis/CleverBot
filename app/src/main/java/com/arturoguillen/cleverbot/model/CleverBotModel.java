@@ -54,7 +54,7 @@ public class CleverBotModel extends BaseModel {
     public Disposable getReply(String input, final ResponseObserver observer) {
 
         String cs = sharedPreferences.getString(Constants.CLEVERBOT_STATE, null);
-        final Observable<BotResponse> observable = retrofit.create(CleverBotApi.class).getReply(cs, input, "");
+        Observable<BotResponse> observable = retrofit.create(CleverBotApi.class).getReply(cs, input, "");
 
         return observable.
                 subscribeOn(subscribeScheduler).

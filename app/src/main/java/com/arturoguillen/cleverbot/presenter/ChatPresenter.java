@@ -38,6 +38,7 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
 
             @Override
             public void onError(Throwable e) {
+                e.printStackTrace();
                 view.hideProgressIndicator();
             }
         });

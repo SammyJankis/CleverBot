@@ -55,6 +55,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     public void addMessage(Message message) {
         chatContent.add(message);
+        notifyDataSetChanged();
     }
 
 }
