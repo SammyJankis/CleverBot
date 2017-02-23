@@ -39,7 +39,7 @@ public class CleverBotModel extends BaseModel {
 
     }
 
-    private interface CleverBotApi {
+    public interface CleverBotApi {
         @GET("getreply?key=" + PrivateConstants.API_KEY)
         Observable<BotResponse> getReply(
                 @Query("cs") String cleverbotState,
@@ -65,7 +65,7 @@ public class CleverBotModel extends BaseModel {
                 flatMap(new Function<BotResponse, ObservableSource<Message>>() {
                     @Override
                     public ObservableSource<Message> apply(BotResponse botResponse) throws Exception {
-
+                        sharedPreferences.edit().putString(Constants.CLEVERBOT_STATE, botResponse.getCs());
                         Message message = new Message(botResponse.getOutput(), false, DateUtils.getDateFromBotResponse(botResponse));
                         return Observable.just(message);
                     }

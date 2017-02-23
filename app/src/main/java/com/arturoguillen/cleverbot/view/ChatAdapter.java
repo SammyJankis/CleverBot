@@ -67,4 +67,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
         chatContent.addAll(savedChatContent);
         notifyDataSetChanged();
     }
+
+
 }

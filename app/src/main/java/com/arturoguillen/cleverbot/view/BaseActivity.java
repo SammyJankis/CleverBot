@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arturoguillen.cleverbot.App;
-import com.arturoguillen.cleverbot.di.component.NetComponent;
+import com.arturoguillen.cleverbot.di.component.ChatComponent;
 
 
 /**
@@ -19,5 +19,5 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .getComponent());
     }
 
-    protected abstract void injectComponent(NetComponent component);
+    protected abstract void injectComponent(ChatComponent component);
 }

@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 
 import com.arturoguillen.cleverbot.Constants;
 import com.arturoguillen.cleverbot.R;
-import com.arturoguillen.cleverbot.di.component.NetComponent;
+import com.arturoguillen.cleverbot.di.component.ChatComponent;
 import com.arturoguillen.cleverbot.entity.Message;
 import com.arturoguillen.cleverbot.presenter.ChatPresenter;
 import com.arturoguillen.cleverbot.presenter.ChatView;
@@ -69,7 +69,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     }
 
     @Override
-    protected void injectComponent(NetComponent component) {
+    protected void injectComponent(ChatComponent component) {
         component.inject(this);
     }
 
