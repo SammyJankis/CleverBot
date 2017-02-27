@@ -25,7 +25,7 @@ import io.reactivex.observers.DisposableObserver;
 public class CleverBotModel extends BaseModel {
 
     @Inject
-    CleverBotApi cleverBotApi;
+    public CleverBotApi cleverBotApi;
 
     @Inject
     SharedPreferences sharedPreferences;

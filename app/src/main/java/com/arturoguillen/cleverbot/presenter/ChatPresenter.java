@@ -19,7 +19,7 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
 
     private Disposable getReplyDisposable;
     @Inject
-    CleverBotModel cleverBotModel;
+    public CleverBotModel cleverBotModel;
 
     @Inject
     public ChatPresenter() {
