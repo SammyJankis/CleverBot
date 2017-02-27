@@ -21,7 +21,14 @@ public class TestNetModule {
     @Singleton
     CleverBotApi provideCleverBotApi(BotResponse fakeBotResponse) {
         CleverBotApi mockCleverBotApi = Mockito.mock(CleverBotApi.class);
-        Mockito.when(mockCleverBotApi.getReply(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(Observable.just(fakeBotResponse));
+
+        Mockito.when(
+                mockCleverBotApi.getReply(
+                        (String) Mockito.any(),
+                        (String) Mockito.any(),
+                        (String) Mockito.any()
+                )
+        ).thenReturn(Observable.just(fakeBotResponse));
         return mockCleverBotApi;
     }
 
