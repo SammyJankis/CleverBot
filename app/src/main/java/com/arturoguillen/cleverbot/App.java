@@ -18,7 +18,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        component = DaggerChatComponent.builder()
+        component = createComponent();
+    }
+
+    protected ChatComponent createComponent() {
+        return DaggerChatComponent.builder()
                 .netModule(new NetModule())
                 .dataModule(new DataModule(this))
                 .build();

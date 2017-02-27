@@ -21,10 +21,8 @@ public class ChatPresenter extends BasePresenter implements ChatPresenterInterfa
     @Inject
     CleverBotModel cleverBotModel;
 
-
     @Inject
     public ChatPresenter() {
-
     }
 
     public void sendMessageToBot(String input) {

@@ -1,6 +1,7 @@
 package com.arturoguillen.cleverbot.di.module;
 
 import com.arturoguillen.cleverbot.Constants;
+import com.arturoguillen.cleverbot.di.api.CleverBotApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -66,4 +67,9 @@ public class NetModule {
         return retrofit;
     }
 
+    @Provides
+    @Singleton
+    CleverBotApi provideCleverBotApi(Retrofit retrofit) {
+        return retrofit.create(CleverBotApi.class);
+    }
 }
